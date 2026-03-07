@@ -1,64 +1,119 @@
-// JS/app.js
+// Globale Variable für ALLE Produkte, damit wir sie nicht ständig neu laden müssen
+let alleProdukteDaten = []; 
 
+// ==========================================
+// PRODUKTE LADEN (Aber noch nicht anzeigen!)
+// ==========================================
 async function ladeProdukte() {
     try {
         const antwort = await fetch('data/products.json');
         if (!antwort.ok) throw new Error(`Netzwerkfehler: ${antwort.status}`);
         
-        const produkte = await antwort.json();
+        alleProdukteDaten = await antwort.json(); // Wir speichern sie unsichtbar ab!
         
-        
-        zeigeProdukteImShop(produkte);
+        // Wir zeigen beim Start absichtlich NICHTS an!
+        // zeigeProdukteImShop(alleProdukteDaten); <- GELÖSCHT!
 
     } catch (fehler) {
-        console.error("Fehler:", fehler);
-        const htmlContainer = document.getElementById('produkt-liste');
-        if (htmlContainer) {
-            htmlContainer.innerHTML = `<h2 style="color: red;">Fehler: ${fehler.message}</h2>`;
-        }
+        console.error("Fehler beim Laden:", fehler);
     }
 }
 
-function zeigeProdukteImShop(produkte) {
-    const htmlContainer = document.getElementById('produkt-liste');
-    htmlContainer.innerHTML = ''; // Vorherigen Lade-Text löschen
+// ==========================================
+// KATEGORIE-KLICK LOGIK
+// ==========================================
+const kategorieContainer = document.getElementById('kategorie-auswahl');
 
-    // Wir gehen jedes einzelne Produkt in der Liste durch
+if (kategorieContainer) {
+    kategorieContainer.addEventListener('click', (event) => {
+        // Wir suchen die angeklickte Kategorie-Karte
+        const geklickteKarte = event.target.closest('.kategorie-karte');
+        
+        // Wenn man daneben geklickt hat, mach nichts
+        if (!geklickteKarte) return;
+
+        // Welche Kategorie steht im 'data-kategorie' Attribut? (z.B. "bier")
+        const gewaehlteKategorie = geklickteKarte.dataset.kategorie;
+
+        // DEN FILTER ANWENDEN!
+        // Nimm alle Produkte und behalte nur die, deren Kategorie passt
+        const gefilterteProdukte = alleProdukteDaten.filter((produkt) => {
+            return produkt.kategorie === gewaehlteKategorie;
+        });
+
+        // Jetzt schicken wir nur diese kleine, gefilterte Liste an unsere Anzeige-Funktion!
+        zeigeProdukteImShop(gefilterteProdukte, geklickteKarte.innerText);
+    });
+}
+
+function zeigeProdukteImShop(produkte, kategorienName = "Produkte") {
+    const htmlContainer = document.getElementById('produkt-liste');
+    
+    // Leeren und die neue Überschrift setzen
+    htmlContainer.innerHTML = `<h2 class="kategorie-titel">${kategorienName}</h2>`; 
+
+    let produktHTML = '';
+
     produkte.forEach(produkt => {
+        // 1. Welche Einheit ist die Haupt-Einheit? (Flasche oder Kasten)
+        // Wenn in der JSON nichts steht, nehmen wir automatisch "Kasten"
+        let hauptEinheit = produkt.einheit ? produkt.einheit : "Kasten";
         
-        
-        if (produkt.preis_kasten === 0 && produkt.preis_sechser === 0) {
-            htmlContainer.innerHTML += `<h2 class="kategorie-titel">${produkt.name}</h2>`;
-            return; 
+        // 2. Gibt es überhaupt einen 6er-Pack? (Prüft, ob der Preis über 0 liegt)
+        let hatSixpack = produkt.preis_sechser > 0;
+
+        // 3. Den Preis-Bereich bauen
+        let preisBoxHTML = `
+            <p><strong>${hauptEinheit}:</strong> ${produkt.preis_kasten.toFixed(2)} € <br>
+            <small>(+ ${produkt.pfand_kasten.toFixed(2)} € Pfand)</small></p>
+        `;
+
+        // Wenn es ein Sixpack gibt, fügen wir den 2. Preis dazu
+        if (hatSixpack) {
+            preisBoxHTML += `
+            <p><strong>6er-Pack:</strong> ${produkt.preis_sechser.toFixed(2)} € <br>
+            <small>(+ ${produkt.pfand_sechser.toFixed(2)} € Pfand)</small></p>
+            `;
         }
 
+        // 4. Das Dropdown ODER das unsichtbare Feld bauen
+        let variantenHTML = '';
+        if (hatSixpack) {
+            // Dropdown anzeigen
+            variantenHTML = `
+            <select class="varianten-auswahl">
+                <option value="${hauptEinheit.toLowerCase()}">${hauptEinheit}</option>
+                <option value="sechser">6er-Pack</option>
+            </select>
+            `;
+        } else {
+            // Kein Sixpack? Dann nur ein unsichtbares Feld für unser JavaScript!
+            variantenHTML = `<input type="hidden" class="varianten-auswahl" value="${hauptEinheit.toLowerCase()}">`;
+        }
 
-        const produktHTML = `
-            <div class="produkt-karte">
-                <img src="images/produkte/icons/${produkt.bild}" alt="${produkt.name}" class="produkt-bild">
-                
-                <h3>${produkt.name}</h3>
-                
-                <div class="preis-box">
-                    <p><strong>Kasten:</strong> ${produkt.preis_kasten.toFixed(2)} € <br><small>(+ ${produkt.pfand_kasten.toFixed(2)} € Pfand)</small></p>
-                    
-                    ${produkt.preis_sechser > 0 ? `<p><strong>6er-Pack:</strong> ${produkt.preis_sechser.toFixed(2)} € <br><small>(+ ${produkt.pfand_sechser.toFixed(2)} € Pfand)</small></p>` : ''}
-                </div>
-
-                <div class="product-type-container">
-                <select class="type-selection">
-                <option selected value="Kasten">Kasten</option>
-                <option value="Sixpack">6er-Pack</option>
-                </select>
-
-                <button class="kauf-button js-kauf-button"
-                data-product-ean="${produkt.ean}">In den Warenkorb</button>
-            </div>
-        `;
         
 
-        htmlContainer.innerHTML += produktHTML;
+        // 5. Die komplette Karte zusammensetzen
+        produktHTML += `
+            <div class="produkt-karte">
+                <a href="produkt.html?ean=${produkt.ean}" class="produkt-detail-link" style="text-decoration: none; color: inherit;">
+                    <img src="images/produkte/icons/${produkt.bild}" alt="${produkt.name}" class="produkt-bild">
+                    <h3>${produkt.name}</h3>
+                </a>
+                
+                <div class="preis-box">
+                    ${preisBoxHTML}
+                </div>
+
+                ${variantenHTML}
+
+                <button class="kauf-button js-kauf-button" data-product-ean="${produkt.ean}">In den Warenkorb</button>
+            </div>
+        `;
     });
+    
+    // Alles auf einmal ins HTML schieben
+    htmlContainer.innerHTML += produktHTML;
 }
 
 
