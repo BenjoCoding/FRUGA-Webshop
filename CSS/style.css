@@ -146,12 +146,30 @@ body {
 }
 
 @media (max-width: 768px) {
-    .such-container {
+    /* 1. Die Navbar selbst: Alles untereinander stapeln */
+    .navbar {
         flex-direction: column;
+        padding: 15px;
+        gap: 15px; /* Abstand zwischen Logo, Suche und Warenkorb */
+        align-items: center; /* Zentriert alles schön */
     }
-    
-    #such-button {
+
+    /* 2. Die Suchleiste: Darf jetzt die volle Breite nutzen */
+    .nav-such-container {
         width: 100%;
+        margin: 0; /* Alte Ränder entfernen */
+        max-width: none; /* Keine Begrenzung mehr auf dem Handy */
+    }
+
+    /* 3. Das Suchfeld und der Button: Sollen sich den Platz gut aufteilen */
+    #suchfeld {
+        width: 70%; /* Nimmt 70% vom Platz */
+        padding: 12px;
+    }
+
+    #such-button {
+        width: 30%; /* Nimmt 30% vom Platz */
+        padding: 12px;
     }
 }
 
