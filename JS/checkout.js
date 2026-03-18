@@ -163,7 +163,7 @@ function zeigeProdukteImWarenkorb(produkte) {
                 <span>Gesamtsumme (Brutto):</span>
                 <span>${gesamtSumme.toFixed(2)} €</span>
             </div>
-            <button class="checkout-button">Zahlungspflichtig bestellen</button>
+            <a href="checkout.html"> <button class="checkout-button">Zahlungspflichtig bestellen</button> </a>
             <p class="hinweis-text">Bezahlung erfolgt in bar bei der Lieferung,oder per Überweisung im Anschluss.</p>
         </div>
     `;
@@ -203,6 +203,23 @@ if (orderSummaryContainer) {
 
         
         ladeProdukte(); 
+    });
+}
+
+const lieferdatumFeld = document.getElementById('lieferdatum');
+
+if (lieferdatumFeld) {
+    const heute = new Date().toISOString().split('T')[0];
+    lieferdatumFeld.setAttribute('min', heute); //Felder vor dem heutigen Tag im Kalender ausgrauen
+
+    lieferdatumFeld.addEventListener('change', (event) => {
+        const gewaehltesDatum = new Date(event.target.value);
+        const wochentag = gewaehltesDatum.getDay(); 
+
+        if (wochentag !== 2 && wochentag !== 5) {
+            alert('Lieferungen sind bei uns leider nur dienstags und freitags möglich. Bitte wählen Sie ein passendes Datum im Kalender.');
+            event.target.value = ''; 
+        }
     });
 }
 

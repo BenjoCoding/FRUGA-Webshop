@@ -1,9 +1,16 @@
 /* Grundlegende Schriftart für den ganzen Shop */
 body {
+    display:flex;
+    flex-direction: column;
     font-family: Arial, sans-serif;
     background-color: #f4f4f9;
     margin: 0;
     padding: 20px;
+    min-height:100vh;
+}
+
+.index-main{
+    flex: 1;
 }
 
 /* So machen wir aus der Liste ein Gitter (Grid) */
@@ -249,5 +256,278 @@ body {
     border-bottom: 2px solid #28a745;
     padding-bottom: 10px;
 }
+
+/* =========================================
+   FOOTER
+   ========================================= */
+
+/*
+.footer {
+    display: flex;
+    flex-direction: column;
+    background-color: #2c3e50;
+    border-top-left-radius: 30px;
+    border-top-right-radius: 30px;
+   
+    
+
+}
+
+.footer-top{
+    background-color: rgb(227, 227, 227);
+    margin-left: 0;
+    padding: 20px;
+    text-align: center;
+    border-top-left-radius: 30px;
+    border-top-right-radius: 30px;
+
+}
+
+.footer-top-title{
+    font-size: 1.6rem;
+}
+
+.footer-top-text{
+    font-size: 1.2rem;
+    text-align: left;
+}
+
+.footer-top-info{
+    display:flex;
+    font-size: 1.3rem;
+    gap: 40px;
+    align-items: center;
+    justify-content: center;
+    
+}
+
+.footer-bottom{
+    display:flex;
+    flex-direction: row;
+    padding: 20px;
+    gap: 80px;
+    align-items: center;
+    justify-content: center;
+
+}
+
+.footer a {
+    text-decoration: none;
+    color: white;
+    
+}
+
+.footer a:hover{
+    text-decoration: underline;
+}
+
+@media (max-width: 768px){
+    .footer-top-info{
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .footer-bottom {
+        gap: 15px;
+    }
+
+    
+}
+    */
+
+    
+    .footer {
+    background-color: #2c3e50;
+    color: #ecf0f1;
+    padding: 50px 20px 20px 20px;
+    border-top: 4px solid #28a745;
+    margin-top: 30px;
+    border-top-left-radius: 30px;
+    border-top-right-radius: 30px;
+}
+
+.footer-top {
+    max-width: 800px;
+    margin: 0 auto 40px auto;
+    text-align: center;
+}
+
+.footer-top-title {
+    font-size: 1.6rem;
+    color: #ffffff;
+    margin-top: 0;
+    margin-bottom: 15px;
+}
+
+.footer-top-text {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    margin-bottom: 30px;
+}
+
+.footer-top-info {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+}
+
+.footer-top-data {
+    font-size: 1.2rem;
+    margin: 0;
+    font-weight: bold;
+    color: #28a745;
+}
+
+.footer-bottom {
+    border-top: 1px solid #455666;
+    padding-top: 20px;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 25px;
+}
+
+.footer-bottom a {
+    color: #ecf0f1;
+    text-decoration: none;
+    font-size: 1rem;
+    transition: color 0.2s ease;
+}
+
+.footer-bottom a:hover {
+    color: #28a745;
+    text-decoration: underline;
+}
+
+@media (max-width: 768px) {
+    .footer-top-info {
+        flex-direction: column;
+        gap: 15px;
+    }
+}
+    
+
+/* =========================================
+   RECHTLICHE SEITEN
+   ========================================= */
+
+
+.text-seite-container {
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 0 20px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    border-bottom: 5px solid #28a745;
+}
+
+.text-seite-container h1 {
+    font-size: 2.2rem;
+    color: #2c3e50;
+    margin-bottom: 30px;
+    border-bottom: 2px solid #28a745;
+    padding-bottom: 10px;
+}
+
+.text-seite-container h2 {
+    font-size: 1.5rem;
+    color: #2c3e50;
+    margin-top: 40px;
+    margin-bottom: 15px;
+}
+
+.text-seite-container p {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: #444444;
+    margin-bottom: 20px;
+}
+
+.text-seite-container a {
+    color: #28a745;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.text-seite-container a:hover {
+    text-decoration: underline;
+}
+
+.warenkorb-logo {
+    display: block;           
+    margin: 0 auto 30px auto; 
+    width: 80%;               /* Nimmt auf kleinen Handys maximal 80% des Platzes ein */
+    max-width: 400px;         
+    height: auto;    
+    padding-top: 20px;          
+}
+
+.oeffnungszeiten-titel{
+    text-align: center;
+    padding-top: 50px;
+}
+
+.oeffnungszeiten-reihe{
+    display:flex;
+    gap: 50px;
+    align-items: center;
+    justify-content: center;
+}
+
+.oeffnungszeiten-text{
+    display:inline-block;
+    
+
+    
+}
+
+.kontakt-titel{
+    text-align: center;
+}
+
+.kontakt-reihe{
+    display:flex;
+    align-items: center;
+    justify-content: center;
+    column-gap: 30px;
+    
+}
+
+.kontakt-reihe p{
+    display:inline-block; 
+    margin-bottom: 0;
+}
+
+.kontakt-info{
+    font-weight: 700;
+}
+
+.kontakt-reihe-letzte{
+    margin-bottom: 40px;
+}
+
+.social-footer{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 40px;
+}
+
+.social-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: #ecf0f1;
+    transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.social-icon:hover {
+    color: #E1306C;
+    transform: scale(1.1);
+}
+
+
+
 
 

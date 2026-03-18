@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <title>Impressum - Fruga</title>
+    <link rel="stylesheet" href="CSS/style.css">
+    <link rel="stylesheet" href="CSS/produkte.css">
+    <link rel="stylesheet" href="CSS/checkout.css">
+</head>
+<body>
+  <header class="navbar">
+        
+        <div class="logo-bereich">
+            <img src="images/icons/LogoKlein.png" alt="Fruga Logo" class="shop-logo">
+            
+        </div>
+
+  
+
+        <div class="warenkorb-bereich">
+            <a href="warenkorb.html" class="warenkorb-link">
+                🛒 Warenkorb <span id="warenkorb-zaehler" class="badge">0</span>
+            </a>
+        </div>
+
+    </header>
+<main class="checkout-container">
+    <a href="index.html"> <img class="warenkorb-logo" src="images/icons/LogoKlein.png"></a>
+
+    <h1>Lieferadresse & Kasse</h1>
+    
+    <form id="checkout-form">
+        <div class="form-row">
+            <div class="form-group">
+                <label for="vorname">Vorname *</label>
+                <input type="text" id="vorname" required>
+            </div>
+            <div class="form-group">
+                <label for="nachname">Nachname *</label>
+                <input type="text" id="nachname" required>
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="form-group">
+                <label for="strasse">Straße & Hausnummer *</label>
+                <input type="text" id="strasse" required>
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="form-group">
+                <label for="plz">Postleitzahl *</label>
+                <input type="text" id="plz" required>
+            </div>
+            <div class="form-group">
+                <label for="ort">Ort *</label>
+                <input type="text" id="ort" required>
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="form-group">
+                <label for="telefon">Telefonnummer (für Rückfragen) *</label>
+                <input type="tel" id="telefon" required>
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="form-group">
+                <label for="email">E-Mail-Adresse *</label>
+                <input type="email" id="email" required>
+            </div>
+        </div>
+
+        <div class="form-row">
+    <div class="form-group">
+        <label for="lieferdatum">Wunsch-Lieferdatum (nur Di. & Fr.) *</label>
+        <input type="date" id="lieferdatum" required>
+    </div>
+</div>
+
+        <div class="form-group">
+            <label for="anmerkungen">Anmerkungen zur Lieferung (optional)</label>
+            <textarea id="anmerkungen" rows="4" placeholder="Z.B. Bitte beim Nachbarn klingeln..."></textarea>
+        </div>
+
+        <button type="submit" class="bestell-button">Zahlungspflichtig bestellen</button>
+        
+        <p class="datenschutz-hinweis">
+            Ihre Daten werden sicher übertragen, vertraulich behandelt und ausschließlich für die Lieferung Ihrer Bestellung genutzt.
+        </p>
+    </form>
+</main>
+
+    <script src="JS/warenkorb.js"></script>
+    <script src="JS/checkout.js"></script>
+    <script src="JS/produkt.js"></script> </body>
+</html>
